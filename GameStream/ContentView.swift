@@ -58,78 +58,18 @@ struct InitSessionView:View{
     var body: some View{
         ScrollView{
             VStack(alignment: .leading){
-                Text("Correo Electrónico").foregroundColor(Color("dark-cian"))
-                ZStack(alignment: .leading){
-                    if(mail.isEmpty){
-                        Text("Escribe tu correo")
-                            .font(.caption)
-                            .foregroundColor( .gray)
-                    }
-                    TextField("",text: $mail)
-                    
-                }
-                Divider()
-                    .frame(height: 1)
-                    .background(Color("dark-cian"))
-                    .padding(.bottom)
+                MailInputTextView(text: $mail)
                 
-                
-                Text("Contraseña").foregroundColor(.white)
-                ZStack(alignment: .leading){
-                    if(password.isEmpty){
-                        Text("Escribe tu contraseña")
-                            .font(.caption)
-                            .foregroundColor( .gray)
-                    }
-                    SecureField("",text: $password)
-                    
-                }
-                Divider()
-                    .frame(height: 1)
-                    .background(Color("dark-cian"))
-                    .padding(.bottom)
-                
+                PassInputText(text: $password)
                 Text("¿Olvidaste tu contraseña?")
                     .font(.footnote)
                     .frame(width: 300, alignment: .trailing)
                     .foregroundColor(Color("dark-cian"))
                     .padding(.bottom)
                 
-                Button(action: initSession, label: {
-                    Text("INICIAR SESIÓN")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth:.infinity,alignment:.center)
-                        .padding(EdgeInsets(top: 11, leading: 18, bottom: 11, trailing: 18))
-                        .overlay(RoundedRectangle(cornerRadius: 6.0).stroke(Color("dark-cian"),lineWidth: 1.0).shadow(color:.white, radius: 6.0))
-                }).padding(.bottom)
+                LoginButton(label: "INICIAR SESIÓN", action: initSession).padding(.bottom)
                 
-                Text("Inicia sesión con redes sociales").foregroundColor(.white).frame(maxWidth:.infinity, alignment: .center)
-                
-                HStack{
-                    Button(action: initSession, label: {
-                        Text("Facebook")
-                            .font(.subheadline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth:.infinity,alignment:.center)
-                            .padding(.vertical,3.0)
-                            .background(Color("blue-gray"))
-                            .clipShape(RoundedRectangle(cornerRadius: 4.0))
-                    }).padding()
-                    
-                    Button(action: initSession, label: {
-                        Text("Twitter")
-                            .font(.subheadline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth:.infinity,alignment:.center)
-                            .padding(.vertical,3.0)
-                            .background(Color("blue-gray"))
-                            .clipShape(RoundedRectangle(cornerRadius: 4.0))
-                    }).padding()
-                }
-                
+                SocialMedia(headerText: "Inicia sesión con redes sociales")
                 
             }.padding(.horizontal,42.0)
         }
@@ -141,9 +81,29 @@ func initSession(){
 }
 
 struct RegistryView:View{
+    @State var mail=""
+    @State var password=""
+    @State var confirPass=""
+    
     var body: some View{
-        Text("Registro")
+        ScrollView{
+            VStack(alignment: .leading){
+                MailInputTextView(text: $mail)
+                
+                PassInputText(text: $password, label: "Contraseña*")
+                PassInputText(text: $confirPass, label: "Confirmar contraseña*")
+                
+                LoginButton(label: "REGÍSTRATE", action: registry).padding(.bottom)
+                
+                SocialMedia(headerText: "Regístrate con redes sociales")
+                
+            }.padding(.horizontal,42.0)
+        }
     }
+}
+
+func registry(){
+    print("registarse")
 }
 
 #Preview {
