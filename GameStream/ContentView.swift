@@ -9,14 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            Color(red: 19/255, green: 30/255, blue: 53/255,opacity: 1)
-            
-            VStack{
-                Image("AppLogo").resizable().aspectRatio(contentMode: .fit).frame(width: 250).padding(.bottom , 60)
-                InitAndRegisterView()
+        NavigationView{
+            ZStack {
+                Color("marine")
+                
+                VStack{
+                   Logo()
+                    InitAndRegisterView()
+                }
             }
-        }
+        }.navigationBarHidden(true)
     }
 }
 
@@ -54,6 +56,7 @@ struct InitAndRegisterView:View {
 struct InitSessionView:View{
     @State var mail=""
     @State var password=""
+    @State var isHomeActive = false
     
     var body: some View{
         ScrollView{
@@ -72,12 +75,18 @@ struct InitSessionView:View{
                 SocialMedia(headerText: "Inicia sesión con redes sociales")
                 
             }.padding(.horizontal,42.0)
+            
+            NavigationLink(destination: TabBar(),
+                           isActive: $isHomeActive,
+                           label:
+                            {EmptyView()})
         }
     }
-}
-
-func initSession(){
-    print("iniciar session")
+    
+    func initSession(){
+        print("iniciar session")
+        isHomeActive=true
+    }
 }
 
 struct RegistryView:View{

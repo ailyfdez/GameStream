@@ -39,6 +39,10 @@ struct SocialMedia: View {
     }
 }
 
+func initSession(){
+    print("social media")
+}
+
 #Preview {
     SocialMedia()
 }
