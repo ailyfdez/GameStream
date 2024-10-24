@@ -87,11 +87,35 @@ struct RegistryView:View{
     
     var body: some View{
         ScrollView{
+            VStack(alignment: .center){
+                Text("Elije una foto de perfil")
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Text("Puedes cambiar o elegirla más adelante")
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .foregroundColor(.white)
+                    .padding(.bottom)
+                
+                Button(action: takePhoto, label: {
+                    ZStack{
+                        Image("perfil-ejemplo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 80,height: 80)
+                        
+                        Image(systemName: "camera")
+                            .foregroundColor(.white)
+                    }
+                })
+            }.padding(.bottom)
+            
             VStack(alignment: .leading){
                 MailInputTextView(text: $mail)
                 
                 PassInputText(text: $password, label: "Contraseña*")
-                PassInputText(text: $confirPass, label: "Confirmar contraseña*")
+                PassInputText(text: $confirPass, label: "Confirmar contraseña*", placeholder: "Confirma tu contraseña")
                 
                 LoginButton(label: "REGÍSTRATE", action: registry).padding(.bottom)
                 
@@ -100,6 +124,10 @@ struct RegistryView:View{
             }.padding(.horizontal,42.0)
         }
     }
+}
+
+func takePhoto(){
+    print("toma foto")
 }
 
 func registry(){
