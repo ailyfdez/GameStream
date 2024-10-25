@@ -12,8 +12,7 @@ struct TabBar: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            Text("Perfil")
-                .font(.system(size: 30,weight: .bold,design: .rounded))
+            ContentView()
                 .tabItem{
                     Image(systemName: "person")
                     Text("Perfil")
