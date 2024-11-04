@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5D543A042CD979840012D89C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5D543A032CD979840012D89C /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5D7406A52CC6D99900297431 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D543A042CD979840012D89C /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,10 +80,10 @@
 		5D74068B2CC6D99300297431 = {
 			isa = PBXGroup;
 			children = (
-				5D7406962CC6D99400297431 /* GameStream */,
 				5D7406A72CC6D99900297431 /* GameStreamTests */,
 				5D7406B12CC6D99900297431 /* GameStreamUITests */,
 				5D7406952CC6D99400297431 /* Products */,
+				5D7406962CC6D99400297431 /* GameStream */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +117,7 @@
 			);
 			name = GameStream;
 			packageProductDependencies = (
+				5D543A032CD979840012D89C /* Kingfisher */,
 			);
 			productName = GameStream;
 			productReference = 5D7406942CC6D99400297431 /* GameStream.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 5D74068B2CC6D99300297431;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5D543A022CD975B60012D89C /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5D7406952CC6D99400297431 /* Products */;
 			projectDirPath = "";
@@ -552,6 +561,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5D543A022CD975B60012D89C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5D543A032CD979840012D89C /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D543A022CD975B60012D89C /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5D74068C2CC6D99300297431 /* Project object */;
 }
