@@ -18,8 +18,7 @@ struct TabBar: View {
                     Text("Perfil")
                 }.tag(0)
             
-            Text("Juegos")
-                .font(.system(size: 30,weight: .bold,design: .rounded))
+            GameView()
                 .tabItem{
                     Image(systemName: "gamecontroller")
                     Text("juegos")

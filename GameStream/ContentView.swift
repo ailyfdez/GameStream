@@ -76,7 +76,7 @@ struct InitSessionView:View{
                 
             }.padding(.horizontal,42.0)
             
-            NavigationLink(destination: TabBar(),
+            NavigationLink(destination: Home(),
                            isActive: $isHomeActive,
                            label:
                             {EmptyView()})
@@ -85,7 +85,7 @@ struct InitSessionView:View{
     
     func initSession(){
         print("iniciar session")
-        isHomeActive=true
+        isHomeActive = true
     }
 }
 
