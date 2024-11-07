@@ -12,13 +12,13 @@ struct TabBar: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            ContentView()
+            ContentView(selectedTab:$selectedTab)
                 .tabItem{
                     Image(systemName: "person")
                     Text("Perfil")
                 }.tag(0)
             
-            GameView()
+            GamesView()
                 .tabItem{
                     Image(systemName: "gamecontroller")
                     Text("juegos")

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Binding var selectedTab: Int
     var body: some View {
         NavigationView{
             ZStack {
@@ -15,7 +16,7 @@ struct ContentView: View {
                 
                 VStack{
                    Logo()
-                    InitAndRegisterView()
+                    InitAndRegisterView(selectedTab: $selectedTab)
                 }
             }
         }.navigationBarHidden(true)
@@ -25,6 +26,7 @@ struct ContentView: View {
 
 struct InitAndRegisterView:View {
     @State var initSessionType = true
+    @Binding var selectedTab: Int
     
     var body: some View {
         VStack{
@@ -44,7 +46,7 @@ struct InitAndRegisterView:View {
             
             Spacer(minLength: 42)
             if(initSessionType==true){
-                InitSessionView()
+                InitSessionView(selectedTab: $selectedTab)
             }
             else{
                 RegistryView()
@@ -57,6 +59,7 @@ struct InitSessionView:View{
     @State var mail=""
     @State var password=""
     @State var isHomeActive = false
+    @Binding var selectedTab: Int
     
     var body: some View{
         ScrollView{
@@ -76,16 +79,13 @@ struct InitSessionView:View{
                 
             }.padding(.horizontal,42.0)
             
-            NavigationLink(destination: Home(),
-                           isActive: $isHomeActive,
-                           label:
-                            {EmptyView()})
+          
         }
     }
     
     func initSession(){
         print("iniciar session")
-        isHomeActive = true
+        selectedTab = 2
     }
 }
 
@@ -144,5 +144,7 @@ func registry(){
 }
 
 #Preview {
-    ContentView()
+    @Previewable @State var selectedTab=0
+   
+    ContentView(selectedTab: $selectedTab)
 }
