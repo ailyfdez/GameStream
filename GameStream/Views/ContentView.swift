@@ -148,3 +148,16 @@ func registry(){
    
     ContentView(selectedTab: $selectedTab)
 }
+
+struct TestView: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "lock")
+                .frame(width: 25.0, height: 25.0)
+            
+            Spacer()
+            
+            Text("Helloooooooooo")
+        }
+    }
+}

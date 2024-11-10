@@ -22,7 +22,7 @@ struct GameView: View {
     var body: some View {
         ZStack {
             
-            Color("Marine").ignoresSafeArea()
+            Color("marine").ignoresSafeArea()
             
             VStack {
                 video(url: url).frame(height:300)
@@ -42,7 +42,11 @@ struct video:View {
     var url:String
     
     var body: some View{
-        VideoPlayer(player: AVPlayer(url: URL(string: url)!)).ignoresSafeArea()
+        if let url = URL(string: url) {
+            VideoPlayer(player: AVPlayer(url: url)).ignoresSafeArea()
+        } else {
+            Text("Invalid URL")
+        }
     }
 }
 
