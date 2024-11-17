@@ -14,7 +14,7 @@ struct GamesView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("Marine").ignoresSafeArea()
+                Color("marine").ignoresSafeArea()
                 
                 VStack {
                     Text("JUEGOS")

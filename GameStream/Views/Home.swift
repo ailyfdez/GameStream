@@ -2,8 +2,7 @@ import SwiftUI
 import AVKit
 
 struct Home: View {
-    @State var searchText = ""
-    @State var url = "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/movie480.mp4"
+    @State var defaultUrl = "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/movie480.mp4"
     
     let urlVideos: [String] = [
         "https://cdn.cloudflare.steamstatic.com/steam/apps/256658589/movie480.mp4",
@@ -26,25 +25,7 @@ struct Home: View {
                     VStack {
                         Logo()
                         
-                        HStack {
-                            Button(action: search, label: {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundColor(searchText.isEmpty ? Color(red: 174/255, green: 177/255, blue: 185/255) : Color("dark-cian"))
-                            })
-                            
-                            ZStack(alignment: .leading) {
-                                if searchText.isEmpty {
-                                    Text("Buscar un video")
-                                        .foregroundColor(Color(red: 174/255, green: 177/255, blue: 185/255))
-                                }
-                                TextField("", text: $searchText)
-                                    .foregroundColor(.white)
-                            }
-                        }
-                        .padding([.top, .leading, .bottom], 11)
-                        .background(Color("blue-gray"))
-                        .clipShape(Capsule())
-                        
+                        SearchGameView()
                         FavoriteGameView(urlVideos: urlVideos, selectedVideoUrl: $selectedVideoUrl)
                         
                         CategoriesView()
@@ -61,15 +42,88 @@ struct Home: View {
             
             // Usamos navigationDestination para navegar al video seleccionado
             .navigationDestination(for: String.self) { url in
-                VideoPlayer(player: AVPlayer(url: URL(string: url)!))
+                VideoPlayer(player: AVPlayer(url: URL(string: defaultUrl)!))
                     .frame(width: 400, height: 300)
             }
         }
     }
+    
 }
 
-func search() {
-    // Función de búsqueda
+struct SearchGameView: View{
+    
+    @ObservedObject var juegoEncontrado = SearchGame()
+    @State var isGameViewActive = false
+    @State var isGameInfoEmpty = false
+    @State var url:String = ""
+    @State var titulo:String = ""
+    @State var studio:String = ""
+    @State var calificacion:String = ""
+    @State var anoPublicacion:String = ""
+    @State var descripcion:String = ""
+    @State var tags:[String] = [""]
+    @State var imgsUrl:[String] = [""]
+    
+    @State var searchText:String = ""
+    
+    var body: some View{
+        HStack {
+            Button(action: {watchGame(name: searchText)}, label: {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(searchText.isEmpty ? Color(red: 174/255, green: 177/255, blue: 185/255) : Color("dark-cian"))
+            }).alert(isPresented: $isGameInfoEmpty) {
+                Alert(title: Text("Error"), message: Text("No se encontro el juego"), dismissButton: .default(Text("Entendido")))
+            }
+            
+            ZStack(alignment: .leading) {
+                if searchText.isEmpty {
+                    Text("Buscar un video")
+                        .foregroundColor(Color(red: 174/255, green: 177/255, blue: 185/255))
+                }
+                TextField("", text: $searchText)
+                    .foregroundColor(.white)
+            }
+        }
+        .padding([.top, .leading, .bottom], 11)
+        .background(Color("blue-gray"))
+        .clipShape(Capsule())
+        .navigationDestination(isPresented: $isGameViewActive) {
+            GameView(url: url, titulo: titulo, studio: studio, calificacion: calificacion, anoPublicacion: anoPublicacion, descripcion: descripcion, tags: tags, imgsUrl: imgsUrl)
+        }
+        
+    }
+    
+    
+    func watchGame(name:String)  {
+        juegoEncontrado.search(gameName: name)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            
+            
+            print("Cantidad E: \(juegoEncontrado.gameInfo.count)")
+            if juegoEncontrado.gameInfo.count == 0{
+                
+                print("No se encontro ningun juego llamado \(name)")
+                
+                isGameInfoEmpty = true
+                
+            }else{
+                
+                url = juegoEncontrado.gameInfo[0].videosUrls.mobile
+                titulo = juegoEncontrado.gameInfo[0].title
+                studio = juegoEncontrado.gameInfo[0].studio
+                calificacion = juegoEncontrado.gameInfo[0].contentRaiting
+                anoPublicacion = juegoEncontrado.gameInfo[0].publicationYear
+                descripcion = juegoEncontrado.gameInfo[0].description
+                tags = juegoEncontrado.gameInfo[0].tags
+                imgsUrl = juegoEncontrado.gameInfo[0].galleryImages
+                
+                isGameViewActive = true
+            }
+        }
+        
+        
+    }
 }
 
 struct FavoriteGameView: View {

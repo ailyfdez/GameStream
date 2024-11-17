@@ -11,6 +11,10 @@ struct Games:Codable, Hashable {
     var games:[Game]
 }
 
+struct Resultados:Codable {
+    var results:[Game]
+}
+
 struct Game:Codable, Hashable {
     var title:String
     var studio:String

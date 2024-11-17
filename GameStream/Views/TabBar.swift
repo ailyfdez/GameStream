@@ -12,7 +12,7 @@ struct TabBar: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            ContentView(selectedTab:$selectedTab)
+            ProfileView()
                 .tabItem{
                     Image(systemName: "person")
                     Text("Perfil")
@@ -30,8 +30,7 @@ struct TabBar: View {
                     Text("Inicio")
                 }.tag(2)
             
-            Text("Favoritos")
-                .font(.system(size: 30,weight: .bold,design: .rounded))
+            FavoritesView()
                 .tabItem{
                     Image(systemName: "heart")
                     Text("Favoritos")

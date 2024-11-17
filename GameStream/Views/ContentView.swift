@@ -8,25 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var selectedTab: Int
     var body: some View {
-        NavigationView{
+        NavigationStack {
             ZStack {
                 Color("marine")
                 
                 VStack{
-                   Logo()
-                    InitAndRegisterView(selectedTab: $selectedTab)
+                    Logo()
+                    InitAndRegisterView()
                 }
             }
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
     }
 }
 
 
 struct InitAndRegisterView:View {
     @State var initSessionType = true
-    @Binding var selectedTab: Int
     
     var body: some View {
         VStack{
@@ -46,7 +45,7 @@ struct InitAndRegisterView:View {
             
             Spacer(minLength: 42)
             if(initSessionType==true){
-                InitSessionView(selectedTab: $selectedTab)
+                InitSessionView()
             }
             else{
                 RegistryView()
@@ -58,34 +57,39 @@ struct InitAndRegisterView:View {
 struct InitSessionView:View{
     @State var mail=""
     @State var password=""
-    @State var isHomeActive = false
-    @Binding var selectedTab: Int
+    @State var isTabActive:Bool = false
     
     var body: some View{
-        ScrollView{
-            VStack(alignment: .leading){
-                MailInputTextView(text: $mail)
-                
-                PassInputText(text: $password)
-                Text("¿Olvidaste tu contraseña?")
-                    .font(.footnote)
-                    .frame(width: 300, alignment: .trailing)
-                    .foregroundColor(Color("dark-cian"))
-                    .padding(.bottom)
-                
-                LoginButton(label: "INICIAR SESIÓN", action: initSession).padding(.bottom)
-                
-                SocialMedia(headerText: "Inicia sesión con redes sociales")
-                
-            }.padding(.horizontal,42.0)
+       
+            ScrollView{
+                VStack(alignment: .leading){
+                    MailInputTextView(text: $mail)
+                    
+                    PassInputText(text: $password)
+                    Text("¿Olvidaste tu contraseña?")
+                        .font(.footnote)
+                        .frame(width: 300, alignment: .trailing)
+                        .foregroundColor(Color("dark-cian"))
+                        .padding(.bottom)
+                    
+                    LoginButton(label: "INICIAR SESIÓN", action: initSession).padding(.bottom)
+                    
+                    SocialMedia(headerText: "Inicia sesión con redes sociales")
+                    
+                }
+                .padding(.horizontal,42.0)
+            }
             
-          
-        }
+            .navigationDestination(isPresented: $isTabActive) {
+                TabBar()
+            }
+        
+        
     }
     
     func initSession(){
         print("iniciar session")
-        selectedTab = 2
+        isTabActive = true
     }
 }
 
@@ -144,9 +148,7 @@ func registry(){
 }
 
 #Preview {
-    @Previewable @State var selectedTab=0
-   
-    ContentView(selectedTab: $selectedTab)
+    ContentView()
 }
 
 struct TestView: View {
